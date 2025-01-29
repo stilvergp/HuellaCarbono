@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/addFootprint.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.stilvergp.controller.AddFootprint">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <Label fx:id="titleLabel" text="Datos de la huella">
+        <font>
+            <Font name="System Bold" size="24.0" />
+        </font>
+    </Label>
+    <Line endX="250.0" startX="-100.0" strokeWidth="2.0" />
+    <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="560.0">
+        <Label text="Actividad realizada:">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+            <HBox.margin>
+                <Insets right="10.0" />
+            </HBox.margin>
+        </Label>
+        <ChoiceBox fx:id="activityChoice" prefWidth="150.0" />
+        <VBox.margin>
+            <Insets bottom="5.0" top="25.0" />
+        </VBox.margin>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="560.0">
+        <Label prefHeight="17.0" prefWidth="130.0" text="Cantidad de consumo:">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+            <HBox.margin>
+                <Insets right="10.0" />
+            </HBox.margin>
+        </Label>
+        <TextField fx:id="valueLine" promptText="Cantidad de consumo" />
+        <VBox.margin>
+            <Insets bottom="5.0" top="5.0" />
+        </VBox.margin>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="560.0">
+        <Label prefHeight="17.0" prefWidth="130.0" text="Unidad de consumo:">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+            <HBox.margin>
+                <Insets right="10.0" />
+            </HBox.margin>
+        </Label>
+      <TextField fx:id="unitChoice" editable="false" prefHeight="25.0" prefWidth="47.0" />
+        <VBox.margin>
+            <Insets bottom="5.0" top="5.0" />
+        </VBox.margin>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="560.0">
+        <Label text="Fecha de realización:">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+            <HBox.margin>
+                <Insets right="10.0" />
+            </HBox.margin>
+        </Label>
+        <DatePicker fx:id="datePicker" promptText="Selecciona una fecha" />
+        <VBox.margin>
+            <Insets bottom="5.0" />
+        </VBox.margin>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="560.0">
+        <Label text="Hora en la que se realizó:">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+            <HBox.margin>
+                <Insets right="10.0" />
+            </HBox.margin>
+        </Label>
+        <Spinner fx:id="hourSpinner">
+            <valueFactory>
+                <SpinnerValueFactory.IntegerSpinnerValueFactory max="23" min="0" />
+            </valueFactory>
+        </Spinner>
+        <Label text=":">
+            <HBox.margin>
+                <Insets left="5.0" right="5.0" />
+            </HBox.margin>
+        </Label>
+        <Spinner fx:id="minuteSpinner">
+            <valueFactory>
+                <SpinnerValueFactory.IntegerSpinnerValueFactory max="59" min="0" />
+            </valueFactory>
+        </Spinner>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="560.0">
+        <Label text="Impacto de la huella de carbono:">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+         <HBox.margin>
+            <Insets right="10.0" />
+         </HBox.margin>
+        </Label>
+        <Label fx:id="footprintImpact" text="0.0">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+      <VBox.margin>
+         <Insets top="35.0" />
+      </VBox.margin>
+    </HBox>
+</VBox>

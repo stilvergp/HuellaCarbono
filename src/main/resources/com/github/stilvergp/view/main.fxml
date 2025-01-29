@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox alignment="CENTER" prefHeight="515.0" prefWidth="604.0" spacing="20.0" stylesheets="@css/main.css"
+      xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/"
+      fx:controller="com.github.stilvergp.controller.MainController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+    <HBox alignment="CENTER" prefHeight="7.0" prefWidth="564.0">
+        <Label text="Huellas registradas">
+            <font>
+                <Font name="System Bold" size="24.0"/>
+            </font>
+        </Label>
+    </HBox>
+    <AnchorPane prefHeight="23.0" prefWidth="564.0">
+        <Label layoutY="14.0" text="Buscar productos:" AnchorPane.leftAnchor="0.0"/>
+        <TextField fx:id="searchBox" layoutX="115.0" layoutY="4.0" prefHeight="25.0" prefWidth="173.0"
+                   promptText="Buscar productos" AnchorPane.leftAnchor="115.0"/>
+    </AnchorPane>
+    <TableView fx:id="tableView">
+        <columns>
+            <TableColumn fx:id="activityColumn" prefWidth="75.0" text="Actividad realizada"/>
+            <TableColumn fx:id="valueColumn" prefWidth="75.0" text="Cantidad de consumo"/>
+            <TableColumn fx:id="unitColumn" prefWidth="75.0" text="Unidad de consumo"/>
+            <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Fecha de realización"/>
+        </columns>
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+        </columnResizePolicy>
+    </TableView>
+    <HBox alignment="CENTER" prefHeight="0.0" prefWidth="564.0">
+        <Button mnemonicParsing="false" onAction="#addFootprint" text="Registrar huella"/>
+    </HBox>
+</VBox>

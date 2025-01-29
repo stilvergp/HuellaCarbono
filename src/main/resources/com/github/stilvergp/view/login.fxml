@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="455.0" prefWidth="471.0" stylesheets="@css/login.css" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml" fx:controller="com.github.stilvergp.controller.LoginController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+    <Label fx:id="loginTitle" prefHeight="53.0" prefWidth="227.0" text="Inicio de Sesión">
+    </Label>
+    <HBox alignment="CENTER" prefHeight="0.0" prefWidth="471.0">
+        <VBox.margin>
+            <Insets bottom="10.0"/>
+        </VBox.margin>
+        <Label prefHeight="34.0" prefWidth="94.0" text="Name:">
+            <font>
+                <Font size="16.0"/>
+            </font>
+        </Label>
+        <TextField fx:id="name" prefHeight="25.0" prefWidth="213.0" promptText="Name"/>
+    </HBox>
+    <HBox alignment="CENTER" prefHeight="16.0" prefWidth="471.0">
+        <VBox.margin>
+            <Insets bottom="20.0"/>
+        </VBox.margin>
+        <Label prefHeight="35.0" prefWidth="94.0" text="Contraseña:">
+            <font>
+                <Font size="16.0"/>
+            </font>
+        </Label>
+        <PasswordField fx:id="password" prefHeight="25.0" prefWidth="213.0" promptText="Contraseña"/>
+    </HBox>
+    <Button mnemonicParsing="false" onAction="#goToMain" text="Acceder">
+        <VBox.margin>
+            <Insets bottom="30.0"/>
+        </VBox.margin>
+    </Button>
+    <HBox alignment="CENTER" prefHeight="16.0" prefWidth="471.0">
+        <Label prefHeight="35.0" prefWidth="117.0" text="o crear cuenta:">
+            <font>
+                <Font size="16.0"/>
+            </font>
+        </Label>
+        <Button fx:id="signIn" mnemonicParsing="false" onAction="#signIn" text="Crear cuenta"/>
+    </HBox>
+</VBox>

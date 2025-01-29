@@ -1,0 +1,66 @@
+.root {
+    -fx-background-color: #f1f1f1;
+}
+
+.vbox {
+    -fx-alignment: center;
+    -fx-padding: 20px;
+}
+
+.image-view {
+    -fx-background-radius: 50%;
+}
+
+.label {
+    -fx-text-fill: #333;
+}
+
+.label > .text {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.label#loginTitle {
+    -fx-font-weight: bold;
+    -fx-text-fill: #28a745;
+    -fx-padding: 10px;
+}
+
+.label#loginTitle > .text {
+    -fx-font-size: 26px;
+}
+
+.text-field, .password-field {
+    -fx-border-color: #28a745;
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 5px;
+    -fx-padding: 8px;
+    -fx-font-size: 14px;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #218838;
+}
+
+.button {
+    -fx-background-color: #28a745;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}
+
+.button:hover {
+    -fx-background-color: #218838;
+}
+
+.button:pressed {
+    -fx-background-color: #1e7e34;
+}
+
+.vbox {
+    -fx-spacing: 20px;
+}
