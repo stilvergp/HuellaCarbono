@@ -4,7 +4,7 @@ public enum Scenes {
     ROOT("view/layout.fxml"),
     MAIN("view/main.fxml"),
     LOGIN("view/login.fxml"),
-    FORMSIGNIN("view/formSignIn.fxml"),
+    SIGNIN("view/signIn.fxml"),
     ADDFOOTPRINT("view/addFootprint.fxml");
 
     private String url;

@@ -5,7 +5,6 @@ import com.github.stilvergp.UserSession;
 import com.github.stilvergp.model.User;
 import com.github.stilvergp.services.UserService;
 import com.github.stilvergp.utils.Alerts;
-import com.github.stilvergp.utils.Security;
 import com.github.stilvergp.view.Scenes;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -43,10 +42,15 @@ public class LoginController extends Controller implements Initializable {
         }
     }
 
+    public void saveUser(User user) {
+        UserService userService = new UserService();
+        userService.save(user);
+    }
+
     public void signIn() throws IOException {
         name.clear();
         password.clear();
-        App.currentController.openModal(Scenes.FORMSIGNIN, "Agregando usuario...", this, null);
+        App.currentController.openModal(Scenes.SIGNIN, "Agregando usuario...", this, null);
     }
 
     @Override

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="470.0" prefWidth="423.0" stylesheets="@css/signIn.css" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml" fx:controller="com.github.stilvergp.controller.SignInController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+    <Label fx:id="titleLabel" text="Crear Cuenta">
+        <font>
+            <Font name="System Bold" size="24.0"/>
+        </font>
+        <VBox.margin>
+            <Insets bottom="10.0" top="15.0"/>
+        </VBox.margin>
+    </Label>
+    <Line endX="124.0" startX="-134.0" strokeWidth="2.0">
+        <VBox.margin>
+            <Insets bottom="20.0"/>
+        </VBox.margin>
+    </Line>
+    <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="308.0">
+        <VBox.margin>
+            <Insets bottom="10.0"/>
+        </VBox.margin>
+        <Label text="Nombre:">
+            <font>
+                <Font size="16.0"/>
+            </font>
+        </Label>
+        <TextField fx:id="name" prefHeight="25.0" prefWidth="185.0" promptText="Nombre">
+            <HBox.margin>
+                <Insets left="10.0"/>
+            </HBox.margin>
+        </TextField>
+    </HBox>
+    <HBox prefHeight="11.0" prefWidth="308.0">
+        <VBox.margin>
+            <Insets bottom="15.0"/>
+        </VBox.margin>
+        <Label text="Contraseña:">
+            <font>
+                <Font size="16.0"/>
+            </font>
+        </Label>
+        <PasswordField fx:id="password" prefHeight="38.0" prefWidth="185.0" promptText="Contraseña">
+            <HBox.margin>
+                <Insets left="10.0"/>
+            </HBox.margin>
+        </PasswordField>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="308.0">
+        <VBox.margin>
+            <Insets bottom="15.0"/>
+        </VBox.margin>
+        <Label text="Email:">
+            <font>
+                <Font size="16.0"/>
+            </font>
+        </Label>
+        <TextField fx:id="email" prefHeight="25.0" prefWidth="185.0" promptText="Email">
+            <HBox.margin>
+                <Insets left="10.0"/>
+            </HBox.margin>
+        </TextField>
+    </HBox>
+    <Button mnemonicParsing="false" onAction="#addUser" text="Crear cuenta"/>
+</VBox>
