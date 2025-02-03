@@ -1,4 +1,4 @@
-package com.github.stilvergp.model;
+package com.github.stilvergp.model.entities;
 
 import jakarta.persistence.*;
 

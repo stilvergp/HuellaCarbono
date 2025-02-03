@@ -1,8 +1,10 @@
 package com.github.stilvergp.controller;
 
-import com.github.stilvergp.model.Activity;
-import com.github.stilvergp.model.Footprint;
+import com.github.stilvergp.UserSession;
+import com.github.stilvergp.model.entities.Activity;
+import com.github.stilvergp.model.entities.Footprint;
 import com.github.stilvergp.services.ActivityService;
+import com.github.stilvergp.utils.Alerts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -14,6 +16,7 @@ import javafx.util.StringConverter;
 
 import java.math.BigDecimal;
 import java.net.URL;
+import java.time.Instant;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
@@ -21,16 +24,16 @@ import java.util.regex.Pattern;
 public class AddFootprint extends Controller implements Initializable {
 
     @FXML
-    public TextField valueLine;
+    private TextField valueLine;
 
     @FXML
-    public Label footprintImpact;
+    private Label footprintImpact;
 
     @FXML
-    public TextField unitChoice;
+    private TextField unitChoice;
 
     @FXML
-    public ChoiceBox<Activity> activityChoice;
+    private ChoiceBox<Activity> activityChoice;
 
     @FXML
     private Spinner<Integer> hourSpinner;
@@ -63,7 +66,17 @@ public class AddFootprint extends Controller implements Initializable {
     }
 
     public void saveFootprint(Event event) {
-
+        if (areFieldsValid()) {
+            Footprint footprint = new Footprint();
+            footprint.setActivity(activityChoice.getValue());
+            footprint.setUser(UserSession.getInstance().getLoggedInUser());
+            footprint.setValue(BigDecimal.valueOf(Double.parseDouble(valueLine.getText())));
+            footprint.setUnit(unitChoice.getText());
+            footprint.setDate(Instant.now());
+            saveAndCloseWindow(footprint, event);
+        } else {
+            Alerts.showErrorAlert("Error al registrar la huella", "Debe rellenar todos los campos");
+        }
     }
 
     private boolean areFieldsValid() {
@@ -113,7 +126,7 @@ public class AddFootprint extends Controller implements Initializable {
             }
         });
         valueLine.textProperty().addListener((_, _, newValue) -> {
-            if (areFieldsValid()) {
+            if (!valueLine.getText().trim().isEmpty() && isNumeric(valueLine.getText()) && activityChoice.getValue() != null) {
                 if (newValue != null) {
                     calculateFootprintImpact(activityChoice.getValue());
                 }

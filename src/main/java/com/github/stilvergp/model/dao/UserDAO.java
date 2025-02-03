@@ -1,7 +1,7 @@
-package com.github.stilvergp.dao;
+package com.github.stilvergp.model.dao;
 
 import com.github.stilvergp.connection.Connection;
-import com.github.stilvergp.model.User;
+import com.github.stilvergp.model.entities.User;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -12,9 +12,14 @@ public class UserDAO {
         session = Connection.getInstance().getSession();
     }
     public void save(User user) {
-        session.beginTransaction();
-        session.persist(user);
-        session.getTransaction().commit();
+        try {
+            session.beginTransaction();
+            session.persist(user);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
     }
 
     public User findById(int id) {
@@ -30,9 +35,14 @@ public class UserDAO {
     }
 
     public void delete(User user) {
-        session.beginTransaction();
-        session.remove(user);
-        session.getTransaction().commit();
+        try {
+            session.beginTransaction();
+            session.remove(user);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
     }
 
     public void close() {

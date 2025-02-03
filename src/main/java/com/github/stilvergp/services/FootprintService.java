@@ -1,8 +1,8 @@
 package com.github.stilvergp.services;
 
-import com.github.stilvergp.dao.FootprintDAO;
-import com.github.stilvergp.model.Footprint;
-import com.github.stilvergp.model.User;
+import com.github.stilvergp.model.dao.FootprintDAO;
+import com.github.stilvergp.model.entities.Footprint;
+import com.github.stilvergp.model.entities.User;
 
 import java.util.List;
 
@@ -11,11 +11,7 @@ public class FootprintService {
     public void save(Footprint footprint) {
         if (footprint != null) {
             FootprintDAO footprintDAO = new FootprintDAO();
-            Footprint isInDatabase = footprintDAO.findById(footprint.getId());
-            if (isInDatabase == null) {
-                footprintDAO.save(footprint);
-            }
-            footprintDAO.close();
+            footprintDAO.save(footprint);
         }
     }
 

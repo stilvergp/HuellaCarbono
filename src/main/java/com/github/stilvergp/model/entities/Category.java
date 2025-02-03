@@ -1,9 +1,11 @@
-package com.github.stilvergp.model;
+package com.github.stilvergp.model.entities;
 
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,7 +29,7 @@ public class Category {
     private Set<Activity> activities = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "category")
-    private Set<Recommendation> recommendations = new LinkedHashSet<>();
+    private List<Recommendation> recommendations = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -69,11 +71,11 @@ public class Category {
         this.activities = activities;
     }
 
-    public Set<Recommendation> getRecommendations() {
+    public List<Recommendation> getRecommendations() {
         return recommendations;
     }
 
-    public void setRecommendations(Set<Recommendation> recommendations) {
+    public void setRecommendations(List<Recommendation> recommendations) {
         this.recommendations = recommendations;
     }
 

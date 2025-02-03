@@ -1,6 +1,5 @@
-package com.github.stilvergp.model;
+package com.github.stilvergp.model.entities;
 
-import com.github.stilvergp.utils.Security;
 import jakarta.persistence.*;
 
 import java.time.Instant;

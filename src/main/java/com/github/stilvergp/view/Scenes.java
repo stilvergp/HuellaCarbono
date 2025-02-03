@@ -5,9 +5,11 @@ public enum Scenes {
     MAIN("view/main.fxml"),
     LOGIN("view/login.fxml"),
     SIGNIN("view/signIn.fxml"),
-    ADDFOOTPRINT("view/addFootprint.fxml");
+    ADDFOOTPRINT("view/addFootprint.fxml"),
+    ADDHABIT("view/addHabit.fxml"),
+    HABITLIST("view/HabitList.fxml");
 
-    private String url;
+    private final String url;
 
     Scenes(String url) {
         this.url = url;

@@ -1,18 +1,14 @@
 package com.github.stilvergp.services;
 
-import com.github.stilvergp.dao.UserDAO;
-import com.github.stilvergp.model.User;
+import com.github.stilvergp.model.dao.UserDAO;
+import com.github.stilvergp.model.entities.User;
 
 public class UserService {
 
     public void save(User user) {
         if (user != null) {
             UserDAO userDAO = new UserDAO();
-            User isInDatabase = userDAO.findById(user.getId());
-            if (isInDatabase == null) {
-                userDAO.save(user);
-            }
-            userDAO.close();
+            userDAO.save(user);
         }
     }
 

@@ -1,9 +1,10 @@
 package com.github.stilvergp.services;
 
-import com.github.stilvergp.dao.ActivityDAO;
-import com.github.stilvergp.model.Activity;
+import com.github.stilvergp.model.dao.ActivityDAO;
+import com.github.stilvergp.model.entities.Activity;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityService {

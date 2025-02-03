@@ -1,6 +1,6 @@
 package com.github.stilvergp;
 
-import com.github.stilvergp.model.User;
+import com.github.stilvergp.model.entities.User;
 
 public class UserSession {
     private static UserSession _instance;

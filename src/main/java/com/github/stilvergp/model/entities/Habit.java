@@ -1,4 +1,4 @@
-package com.github.stilvergp.model;
+package com.github.stilvergp.model.entities;
 
 import jakarta.persistence.*;
 
@@ -13,7 +13,7 @@ public class Habit {
     @MapsId("userId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
-    private com.github.stilvergp.model.User user;
+    private User user;
 
     @MapsId("activityId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

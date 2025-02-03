@@ -2,7 +2,7 @@ package com.github.stilvergp.controller;
 
 import com.github.stilvergp.App;
 import com.github.stilvergp.UserSession;
-import com.github.stilvergp.model.User;
+import com.github.stilvergp.model.entities.User;
 import com.github.stilvergp.services.UserService;
 import com.github.stilvergp.utils.Alerts;
 import com.github.stilvergp.view.Scenes;

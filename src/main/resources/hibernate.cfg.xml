@@ -18,13 +18,13 @@
         <property name="hibernate.format_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
 
-        <mapping class="com.github.stilvergp.model.User"/>
-        <mapping class="com.github.stilvergp.model.Activity"/>
-        <mapping class="com.github.stilvergp.model.Category"/>
-        <mapping class="com.github.stilvergp.model.Footprint"/>
-        <mapping class="com.github.stilvergp.model.Habit"/>
-        <mapping class="com.github.stilvergp.model.Recommendation"/>
-        <mapping class="com.github.stilvergp.model.HabitId"/>
+        <mapping class="com.github.stilvergp.model.entities.User"/>
+        <mapping class="com.github.stilvergp.model.entities.Activity"/>
+        <mapping class="com.github.stilvergp.model.entities.Category"/>
+        <mapping class="com.github.stilvergp.model.entities.Footprint"/>
+        <mapping class="com.github.stilvergp.model.entities.Habit"/>
+        <mapping class="com.github.stilvergp.model.entities.Recommendation"/>
+        <mapping class="com.github.stilvergp.model.entities.HabitId"/>
 
     </session-factory>
 </hibernate-configuration>

@@ -5,13 +5,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.*?>
-<VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/addFootprint.css"
+<VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/addHabit.css"
       xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/"
-      fx:controller="com.github.stilvergp.controller.AddFootprint">
+      fx:controller="com.github.stilvergp.controller.AddHabitController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
-    <Label fx:id="titleLabel" text="Datos de la huella">
+    <Label fx:id="titleLabel" text="Datos de el habito">
         <font>
             <Font name="System Bold" size="24.0"/>
         </font>
@@ -32,7 +32,7 @@
         </VBox.margin>
     </HBox>
     <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="560.0">
-        <Label prefHeight="17.0" prefWidth="130.0" text="Cantidad de consumo:">
+        <Label prefHeight="17.0" prefWidth="130.0" text="Frecuencia de realización:">
             <font>
                 <Font name="System Bold" size="12.0"/>
             </font>
@@ -40,13 +40,13 @@
                 <Insets right="10.0"/>
             </HBox.margin>
         </Label>
-        <TextField fx:id="valueLine" promptText="Cantidad de consumo"/>
+        <TextField fx:id="frequencyLine" promptText="Frecuencia de realización"/>
         <VBox.margin>
             <Insets bottom="5.0" top="5.0"/>
         </VBox.margin>
     </HBox>
     <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="560.0">
-        <Label prefHeight="17.0" prefWidth="130.0" text="Unidad de consumo:">
+        <Label prefHeight="17.0" prefWidth="130.0" text="Periodo de tiempo:">
             <font>
                 <Font name="System Bold" size="12.0"/>
             </font>
@@ -54,7 +54,7 @@
                 <Insets right="10.0"/>
             </HBox.margin>
         </Label>
-        <TextField fx:id="unitChoice" editable="false" prefHeight="25.0" prefWidth="47.0"/>
+        <ChoiceBox fx:id="typeChoice" prefWidth="150.0"/>
         <VBox.margin>
             <Insets bottom="5.0" top="5.0"/>
         </VBox.margin>
@@ -98,23 +98,5 @@
             </valueFactory>
         </Spinner>
     </HBox>
-    <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="560.0">
-        <Label text="Impacto de la huella de carbono:">
-            <font>
-                <Font name="System Bold" size="12.0"/>
-            </font>
-            <HBox.margin>
-                <Insets right="10.0"/>
-            </HBox.margin>
-        </Label>
-        <Label fx:id="footprintImpact" text="0.0">
-            <font>
-                <Font name="System Bold" size="12.0"/>
-            </font>
-        </Label>
-        <VBox.margin>
-            <Insets top="35.0"/>
-        </VBox.margin>
-    </HBox>
-    <Button mnemonicParsing="false" onAction="#saveFootprint" text="Registrar"/>
+    <Button mnemonicParsing="false" onAction="#saveHabit" text="Registrar"/>
 </VBox>

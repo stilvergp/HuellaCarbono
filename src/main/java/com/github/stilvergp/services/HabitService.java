@@ -1,18 +1,17 @@
 package com.github.stilvergp.services;
 
-import com.github.stilvergp.dao.HabitDAO;
-import com.github.stilvergp.model.Habit;
-import com.github.stilvergp.model.HabitId;
+import com.github.stilvergp.model.dao.HabitDAO;
+import com.github.stilvergp.model.entities.Habit;
+import com.github.stilvergp.model.entities.HabitId;
+import com.github.stilvergp.model.entities.User;
+
+import java.util.List;
 
 public class HabitService {
     public void save(Habit habit) {
         if (habit != null) {
             HabitDAO habitDAO = new HabitDAO();
-            Habit isInDatabase = habitDAO.findById(habit.getId());
-            if (isInDatabase == null) {
-                habitDAO.save(habit);
-            }
-            habitDAO.close();
+            habitDAO.save(habit);
         }
     }
 
@@ -27,6 +26,15 @@ public class HabitService {
             habitDAO.close();
         }
         return habit;
+    }
+
+    public List<Habit> findByUser(User user) {
+        List<Habit> habits = null;
+        if (user != null) {
+            HabitDAO habitDAO = new HabitDAO();
+            habits = habitDAO.findByUser(user);
+        }
+        return habits;
     }
 
     public void update(Habit habit) {
@@ -49,4 +57,6 @@ public class HabitService {
             habitDAO.close();
         }
     }
+
+
 }

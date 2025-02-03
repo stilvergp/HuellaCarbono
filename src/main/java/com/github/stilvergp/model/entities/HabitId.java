@@ -1,13 +1,14 @@
-package com.github.stilvergp.model;
+package com.github.stilvergp.model.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import org.hibernate.Hibernate;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class HabitId implements java.io.Serializable {
+public class HabitId implements Serializable {
     private static final long serialVersionUID = 4075999080189554857L;
     @Column(name = "user_id", nullable = false)
     private Integer userId;

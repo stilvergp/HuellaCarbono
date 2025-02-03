@@ -2,24 +2,27 @@ package com.github.stilvergp.controller;
 
 import com.github.stilvergp.App;
 import com.github.stilvergp.UserSession;
-import com.github.stilvergp.model.Footprint;
+import com.github.stilvergp.model.entities.Footprint;
+import com.github.stilvergp.services.ActivityService;
 import com.github.stilvergp.services.FootprintService;
+import com.github.stilvergp.utils.Alerts;
 import com.github.stilvergp.view.Scenes;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -41,6 +44,9 @@ public class MainController extends Controller implements Initializable {
     private TableColumn<Footprint, Instant> dateColumn;
 
     @FXML
+    private TableColumn<Footprint, String> footprintImpactColumn;
+
+    @FXML
     private TextField searchBox;
 
     private ObservableList<Footprint> footprints;
@@ -51,9 +57,9 @@ public class MainController extends Controller implements Initializable {
     }
 
     public void reloadFootprintsFromDatabase() {
+        tableView.getItems().clear();
         List<Footprint> footprints = new FootprintService().findByUser(UserSession.getInstance().getLoggedInUser());
         this.footprints = FXCollections.observableList(footprints);
-        tableView.getItems().clear();
         tableView.setItems(this.footprints);
     }
 
@@ -70,6 +76,10 @@ public class MainController extends Controller implements Initializable {
         App.currentController.openModal(Scenes.ADDFOOTPRINT, "Registrando huella de carbono...", this, null);
     }
 
+    public void myHabits() throws IOException {
+        App.currentController.changeScene(Scenes.HABITLIST, null);
+    }
+
     public void saveFootprint(Footprint footprint) {
         FootprintService footprintService = new FootprintService();
         footprintService.save(footprint);
@@ -81,14 +91,42 @@ public class MainController extends Controller implements Initializable {
 
     }
 
+    public void removeFootprint() {
+        Footprint footprint = tableView.getSelectionModel().getSelectedItem();
+        if (footprint == null) return;
+        Alerts.showConfirmationAlert("Eliminación de huella",
+                "Esta a punto de eliminar esta huella, " +
+                        "¿Está totalmente seguro de esta acción?").showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                FootprintService footprintService = new FootprintService();
+                footprintService.delete(footprint);
+                reloadFootprintsFromDatabase();
+            }
+        });
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        tableView.setEditable(true);
+        valueColumn.setEditable(true);
         activityColumn.setCellValueFactory(footprint -> new SimpleStringProperty(footprint.getValue().getActivity().getName()));
         valueColumn.setCellValueFactory(footprint -> new SimpleDoubleProperty(footprint.getValue().getValue().doubleValue()).asObject());
+        valueColumn.setOnEditCommit(event -> {
+            if (event.getNewValue().equals(event.getOldValue())) return;
+            if (event.getNewValue() < 9999) {
+                Footprint footprint = tableView.getSelectionModel().getSelectedItem();
+                footprint.setValue(BigDecimal.valueOf(event.getNewValue()));
+                FootprintService footprintService = new FootprintService();
+                footprintService.update(footprint);
+                tableView.refresh();
+            } else {
+                Alerts.showErrorAlert("Error al actualizar la huella", "El valor introducido es mayor de lo permitido");
+            }
+        });
         unitColumn.setCellValueFactory(footprint -> new SimpleStringProperty(footprint.getValue().getUnit()));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         dateColumn.setCellFactory(_ -> new TableCell<>() {
-            private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
             @Override
             protected void updateItem(Instant date, boolean empty) {
@@ -96,15 +134,24 @@ public class MainController extends Controller implements Initializable {
                 if (empty || date == null) {
                     setText(null);
                 } else {
-                    setText(formatter.format(date));
+                    LocalDateTime dateTime = date.atZone(ZoneId.systemDefault()).toLocalDateTime();
+                    setText(formatter.format(dateTime));
                 }
             }
         });
         searchBox.textProperty().addListener((_, _, newValue) -> {
-            if (newValue != null && !newValue.trim().isEmpty()) {
+            if (newValue != null) {
                 searchFootprints(newValue);
             }
         });
+        footprintImpactColumn.setCellValueFactory(footprint -> new SimpleStringProperty(calculateFootprintImpact(footprint.getValue())));
     }
+
+    private String calculateFootprintImpact(Footprint footprint) {
+        BigDecimal emissionFactor = new ActivityService().getEmissionFactor(footprint.getActivity());
+        Double impact = footprint.getValue().doubleValue() * emissionFactor.doubleValue();
+        return String.format("%.2f", impact) + " Kg CO²";
+    }
+
 
 }

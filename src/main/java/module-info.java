@@ -6,13 +6,12 @@ module com.github.stilvergp {
     requires javafx.graphics;
     requires org.hibernate.orm.core;
 
-    opens com.github.stilvergp.model to org.hibernate.orm.core;
+    opens com.github.stilvergp.model.entities to org.hibernate.orm.core;
     opens com.github.stilvergp.controller to javafx.fxml;
     opens com.github.stilvergp.view to javafx.fxml;
 
     exports com.github.stilvergp;
-    exports com.github.stilvergp.model;
     exports com.github.stilvergp.controller;
     exports com.github.stilvergp.view;
-
+    exports com.github.stilvergp.model.entities;
 }

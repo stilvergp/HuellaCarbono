@@ -1,7 +1,7 @@
-package com.github.stilvergp.dao;
+package com.github.stilvergp.model.dao;
 
 import com.github.stilvergp.connection.Connection;
-import com.github.stilvergp.model.Activity;
+import com.github.stilvergp.model.entities.Activity;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -27,8 +27,6 @@ public class ActivityDAO {
                 .setParameter("id", activity.getId());
         return hql.uniqueResult();
     }
-
-
 
     public Activity findById(int id) {
         return session.get(Activity.class, id);
