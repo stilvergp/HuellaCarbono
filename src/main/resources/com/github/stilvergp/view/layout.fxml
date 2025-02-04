@@ -13,6 +13,9 @@
             <Menu id="cuenta" fx:id="account" mnemonicParsing="false" text="Cuenta" visible="false">
                 <MenuItem mnemonicParsing="false" onAction="#logOff" text="Cerrar sesión"/>
             </Menu>
+            <Menu id="exportar" fx:id="export" mnemonicParsing="false" text="Exportar" visible="false">
+                <MenuItem mnemonicParsing="false" onAction="#exportToPDF" text="Exportar huellas a PDF"/>
+            </Menu>
         </MenuBar>
     </top>
 </BorderPane>

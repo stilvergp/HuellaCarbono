@@ -2,7 +2,9 @@ package com.github.stilvergp.model.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,10 +23,10 @@ public class Activity {
     private Category category;
 
     @OneToMany(mappedBy = "activity")
-    private Set<Footprint> footprints = new LinkedHashSet<>();
+    private List<Footprint> footprints = new ArrayList<>();
 
     @OneToMany(mappedBy = "activity")
-    private Set<Habit> habits = new LinkedHashSet<>();
+    private List<Habit> habits = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -50,19 +52,19 @@ public class Activity {
         this.category = category;
     }
 
-    public Set<Footprint> getFootprints() {
+    public List<Footprint> getFootprints() {
         return footprints;
     }
 
-    public void setFootprints(Set<Footprint> footprints) {
+    public void setFootprints(List<Footprint> footprints) {
         this.footprints = footprints;
     }
 
-    public Set<Habit> getHabits() {
+    public List<Habit> getHabits() {
         return habits;
     }
 
-    public void setHabits(Set<Habit> habits) {
+    public void setHabits(List<Habit> habits) {
         this.habits = habits;
     }
 

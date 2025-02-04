@@ -3,6 +3,7 @@ package com.github.stilvergp.controller;
 import com.github.stilvergp.UserSession;
 import com.github.stilvergp.model.entities.Activity;
 import com.github.stilvergp.model.entities.Habit;
+import com.github.stilvergp.model.entities.HabitId;
 import com.github.stilvergp.services.ActivityService;
 import com.github.stilvergp.utils.Alerts;
 import javafx.collections.FXCollections;
@@ -74,6 +75,10 @@ public class AddHabitController extends Controller implements Initializable {
         if (areFieldsValid()) {
             if (isDateValid()) {
                 Habit habit = new Habit();
+                HabitId habitId = new HabitId();
+                habitId.setActivityId(activityChoice.getValue().getId());
+                habitId.setUserId(UserSession.getInstance().getLoggedInUser().getId());
+                habit.setId(habitId);
                 habit.setActivity(activityChoice.getValue());
                 habit.setFrequency(Integer.valueOf(frequencyLine.getText()));
                 habit.setUser(UserSession.getInstance().getLoggedInUser());
@@ -91,7 +96,7 @@ public class AddHabitController extends Controller implements Initializable {
     }
 
     private boolean isDateValid() {
-        return datePicker.getValue().isBefore(LocalDate.now());
+        return datePicker.getValue().isBefore(LocalDate.now()) || datePicker.getValue().isEqual(LocalDate.now());
     }
 
     private boolean areFieldsValid() {

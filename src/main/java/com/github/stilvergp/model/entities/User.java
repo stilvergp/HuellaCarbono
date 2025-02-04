@@ -3,9 +3,7 @@ package com.github.stilvergp.model.entities;
 import jakarta.persistence.*;
 
 import java.time.Instant;
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "user")
@@ -28,10 +26,10 @@ public class User {
     private Instant registrationDate;
 
     @OneToMany(mappedBy = "user")
-    private Set<Footprint> footprints = new LinkedHashSet<>();
+    private List<Footprint> footprints = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private Set<Habit> habits = new LinkedHashSet<>();
+    private List<Habit> habits = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -73,19 +71,19 @@ public class User {
         this.registrationDate = registrationDate;
     }
 
-    public Set<Footprint> getFootprints() {
+    public List<Footprint> getFootprints() {
         return footprints;
     }
 
-    public void setFootprints(Set<Footprint> footprints) {
+    public void setFootprints(List<Footprint> footprints) {
         this.footprints = footprints;
     }
 
-    public Set<Habit> getHabits() {
+    public List<Habit> getHabits() {
         return habits;
     }
 
-    public void setHabits(Set<Habit> habits) {
+    public void setHabits(List<Habit> habits) {
         this.habits = habits;
     }
 

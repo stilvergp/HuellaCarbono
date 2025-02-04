@@ -5,6 +5,8 @@ module com.github.stilvergp {
     requires javafx.fxml;
     requires javafx.graphics;
     requires org.hibernate.orm.core;
+    requires kernel;
+    requires layout;
 
     opens com.github.stilvergp.model.entities to org.hibernate.orm.core;
     opens com.github.stilvergp.controller to javafx.fxml;

@@ -26,7 +26,7 @@ public class Category {
     private String unit;
 
     @OneToMany(mappedBy = "category")
-    private Set<Activity> activities = new LinkedHashSet<>();
+    private List<Activity> activities = new ArrayList<>();
 
     @OneToMany(mappedBy = "category")
     private List<Recommendation> recommendations = new ArrayList<>();
@@ -63,11 +63,11 @@ public class Category {
         this.unit = unit;
     }
 
-    public Set<Activity> getActivities() {
+    public List<Activity> getActivities() {
         return activities;
     }
 
-    public void setActivities(Set<Activity> activities) {
+    public void setActivities(List<Activity> activities) {
         this.activities = activities;
     }
 
