@@ -5,16 +5,22 @@ import com.github.stilvergp.UserSession;
 import com.github.stilvergp.model.entities.Habit;
 import com.github.stilvergp.services.HabitService;
 import com.github.stilvergp.utils.Alerts;
+import com.github.stilvergp.utils.PDFExporter;
 import com.github.stilvergp.view.Scenes;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
@@ -103,6 +109,25 @@ public class HabitListController extends Controller implements Initializable {
                 reloadHabitsFromDatabase();
             }
         });
+    }
+
+    public void exportToPDF(Event event) {
+        Window window = ((Node) (event.getSource())).getScene().getWindow();
+        List<Habit> userHabits = UserSession.getInstance().getLoggedInUser().getHabits();
+        if (!userHabits.isEmpty()) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Exportar a PDF.");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF", "*.pdf"));
+            fileChooser.setInitialFileName("habitos.pdf");
+            File file = fileChooser.showSaveDialog(window);
+            if (file != null) {
+                PDFExporter.exportHabitsToPDF(file,userHabits);
+            } else {
+                Alerts.showErrorAlert("Error al exportar habitos", "Ruta inválida");
+            }
+        } else {
+            Alerts.showErrorAlert("Error al exportar habitos", "No hay habitos registrados");
+        }
     }
 
     @Override

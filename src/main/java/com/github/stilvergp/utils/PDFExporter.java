@@ -69,6 +69,8 @@ public class PDFExporter {
                 int randomIndex = new Random().nextInt(habit.getActivity().getCategory().getRecommendations().size());
                 table.addCell(habit.getActivity().getCategory().getRecommendations().get(randomIndex).getDescription());
             }
+            document.add(table);
+            document.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

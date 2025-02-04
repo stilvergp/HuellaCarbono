@@ -26,6 +26,7 @@
             <Label prefHeight="17.0" prefWidth="110.0" text="Buscar productos:"/>
             <TextField fx:id="searchBox" prefHeight="25.0" prefWidth="173.0" promptText="Buscar productos"/>
         </HBox>
+        <Region HBox.hgrow="ALWAYS"/>
         <Button mnemonicParsing="false" onAction="#myHabits" prefHeight="25.0" prefWidth="111.0" text="Mis habitos"/>
     </HBox>
     <TableView fx:id="tableView">
@@ -41,11 +42,8 @@
         </columnResizePolicy>
     </TableView>
     <HBox alignment="CENTER" prefHeight="0.0" prefWidth="564.0">
-        <Button mnemonicParsing="false" onAction="#addFootprint" text="Registrar huella">
-            <HBox.margin>
-                <Insets right="150.0"/>
-            </HBox.margin>
-        </Button>
-        <Button mnemonicParsing="false" onAction="#removeFootprint" text="Eliminar"/>
+        <Button mnemonicParsing="false" onAction="#addFootprint" text="Registrar huella" HBox.hgrow="ALWAYS"/>
+        <Button mnemonicParsing="false" onAction="#removeFootprint" text="Eliminar" HBox.hgrow="ALWAYS"/>
+        <Button mnemonicParsing="false" onAction="#exportToPDF" text="Exportar huellas" HBox.hgrow="ALWAYS"/>
     </HBox>
 </VBox>

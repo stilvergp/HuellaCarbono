@@ -6,17 +6,22 @@ import com.github.stilvergp.model.entities.Footprint;
 import com.github.stilvergp.services.ActivityService;
 import com.github.stilvergp.services.FootprintService;
 import com.github.stilvergp.utils.Alerts;
+import com.github.stilvergp.utils.PDFExporter;
 import com.github.stilvergp.view.Scenes;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -103,6 +108,25 @@ public class MainController extends Controller implements Initializable {
                 reloadFootprintsFromDatabase();
             }
         });
+    }
+
+    public void exportToPDF(Event event) {
+        Window window = ((Node) (event.getSource())).getScene().getWindow();
+        List<Footprint> userFootprints = UserSession.getInstance().getLoggedInUser().getFootprints();
+        if (!userFootprints.isEmpty()) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Exportar a PDF.");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF", "*.pdf"));
+            fileChooser.setInitialFileName("huellas.pdf");
+            File file = fileChooser.showSaveDialog(window);
+            if (file != null) {
+                PDFExporter.exportFootprintsToPDF(file,userFootprints);
+            } else {
+                Alerts.showErrorAlert("Error al exportar huellas", "Ruta inválida");
+            }
+        } else {
+            Alerts.showErrorAlert("Error al exportar huellas", "No hay huellas registradas");
+        }
     }
 
     @Override

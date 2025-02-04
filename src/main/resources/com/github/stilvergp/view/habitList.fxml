@@ -5,50 +5,47 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="515.0" prefWidth="604.0" spacing="20.0" stylesheets="@css/habitList.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.stilvergp.controller.HabitListController">
+<VBox alignment="CENTER" prefHeight="515.0" prefWidth="604.0" spacing="20.0" stylesheets="@css/habitList.css"
+      xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.github.stilvergp.controller.HabitListController">
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
     <HBox alignment="CENTER" prefHeight="7.0" prefWidth="564.0">
         <Label text="Habitos registrados">
             <font>
-                <Font name="System Bold" size="24.0" />
+                <Font name="System Bold" size="24.0"/>
             </font>
         </Label>
     </HBox>
     <HBox alignment="CENTER_LEFT" prefHeight="278.0" prefWidth="564.0">
         <HBox alignment="CENTER_LEFT" prefHeight="117.0" prefWidth="261.0">
-            <Label text="Buscar habitos:" />
-            <TextField fx:id="searchBox" prefHeight="25.0" prefWidth="173.0" promptText="Buscar habitos" />
+            <Label text="Buscar habitos:"/>
+            <TextField fx:id="searchBox" prefHeight="25.0" prefWidth="173.0" promptText="Buscar habitos"/>
         </HBox>
         <VBox alignment="CENTER_LEFT" prefHeight="132.0" prefWidth="302.0">
             <Label text="Recomendación">
                 <font>
-                    <Font name="System Bold" size="14.0" />
+                    <Font name="System Bold" size="14.0"/>
                 </font>
             </Label>
-            <TextArea fx:id="recommendationText" editable="false" prefHeight="86.0" prefWidth="182.0" />
+            <TextArea fx:id="recommendationText" editable="false" prefHeight="86.0" prefWidth="182.0"/>
         </VBox>
     </HBox>
     <TableView fx:id="tableView" prefWidth="564.0">
         <columns>
-            <TableColumn fx:id="activityColumn" prefWidth="75.0" text="Actividad realizada" />
-            <TableColumn fx:id="frequencyColumn" prefWidth="75.0" text="Frecuencia de realización" />
-            <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Intervalo de realización" />
-            <TableColumn fx:id="lastDateColumn" prefWidth="75.0" text="Última fecha de realización" />
+            <TableColumn fx:id="activityColumn" prefWidth="75.0" text="Actividad realizada"/>
+            <TableColumn fx:id="frequencyColumn" prefWidth="75.0" text="Frecuencia de realización"/>
+            <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Intervalo de realización"/>
+            <TableColumn fx:id="lastDateColumn" prefWidth="75.0" text="Última fecha de realización"/>
         </columns>
         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
         </columnResizePolicy>
     </TableView>
     <HBox alignment="CENTER" prefHeight="0.0" prefWidth="564.0">
-        <Button mnemonicParsing="false" onAction="#addHabit" text="Registrar habito">
-         <HBox.margin>
-            <Insets right="150.0" />
-         </HBox.margin></Button>
-      <Button mnemonicParsing="false" onAction="#removeHabit" text="Eliminar" />
-      <VBox.margin>
-         <Insets />
-      </VBox.margin>
+        <Button mnemonicParsing="false" onAction="#addHabit" text="Registrar habito"/>
+        <Button mnemonicParsing="false" onAction="#removeHabit" text="Eliminar"/>
+        <Button mnemonicParsing="false" onAction="#exportToPDF" text="Exportar habitos"/>
     </HBox>
 </VBox>
