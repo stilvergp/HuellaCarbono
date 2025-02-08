@@ -1,33 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
-<VBox alignment="CENTER" prefHeight="515.0" prefWidth="604.0" spacing="20.0" stylesheets="@css/main.css"
+<?import javafx.scene.text.Font?>
+<VBox alignment="CENTER" prefHeight="745.0" prefWidth="1020" spacing="20.0" stylesheets="@css/main.css"
       xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/"
       fx:controller="com.github.stilvergp.controller.MainController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
-    <HBox alignment="CENTER" prefHeight="7.0" prefWidth="564.0">
+    <HBox alignment="CENTER_RIGHT" prefHeight="7.0" prefWidth="564.0">
         <Label text="Huellas registradas">
             <font>
                 <Font name="System Bold" size="24.0"/>
             </font>
         </Label>
+        <Region prefHeight="42.0" prefWidth="100.0"/>
+        <Button mnemonicParsing="false" onAction="#compareFootprints" text="Comparar impacto ambiental"/>
     </HBox>
     <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-        <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="285.0">
+        <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="400.0">
             <HBox.margin>
                 <Insets/>
             </HBox.margin>
-            <Label prefHeight="17.0" prefWidth="110.0" text="Buscar productos:"/>
-            <TextField fx:id="searchBox" prefHeight="25.0" prefWidth="173.0" promptText="Buscar productos"/>
+            <Label prefHeight="35.0" prefWidth="174.0" text="Buscar huellas:"/>
+            <TextField fx:id="searchBox" prefHeight="25.0" prefWidth="175.0" promptText="Buscar huellas"/>
         </HBox>
         <Region HBox.hgrow="ALWAYS"/>
-        <Button mnemonicParsing="false" onAction="#myHabits" prefHeight="25.0" prefWidth="111.0" text="Mis habitos"/>
+        <Button mnemonicParsing="false" onAction="#myHabits" prefHeight="42.0" prefWidth="120.0" text="Mis habitos"/>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="395">
+        <Label prefHeight="35.0" prefWidth="189.0" text="Filtrar por fecha:"/>
+        <DatePicker fx:id="startDateInterval" prefHeight="42.0" prefWidth="222.0"
+                    promptText="Selecciona la fecha de inicio">
+            <HBox.margin>
+                <Insets right="15.0"/>
+            </HBox.margin>
+        </DatePicker>
+        <DatePicker fx:id="endDateInterval" prefHeight="42.0" prefWidth="207.0" promptText="Selecciona la fecha de fin">
+            <HBox.margin>
+                <Insets right="15.0"/>
+            </HBox.margin>
+        </DatePicker>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button mnemonicParsing="false" onAction="#removeFilter" text="Borrar filtros"/>
     </HBox>
     <TableView fx:id="tableView">
         <columns>
@@ -38,12 +55,12 @@
             <TableColumn fx:id="footprintImpactColumn" prefWidth="75.0" text="Impacto ambiental"/>
         </columns>
         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS"/>
         </columnResizePolicy>
     </TableView>
     <HBox alignment="CENTER" prefHeight="0.0" prefWidth="564.0">
-        <Button mnemonicParsing="false" onAction="#addFootprint" text="Registrar huella" HBox.hgrow="ALWAYS"/>
-        <Button mnemonicParsing="false" onAction="#removeFootprint" text="Eliminar" HBox.hgrow="ALWAYS"/>
-        <Button mnemonicParsing="false" onAction="#exportToPDF" text="Exportar huellas" HBox.hgrow="ALWAYS"/>
+        <Button mnemonicParsing="false" onAction="#addFootprint" text="Registrar huella"/>
+        <Button mnemonicParsing="false" onAction="#removeFootprint" text="Eliminar"/>
+        <Button mnemonicParsing="false" onAction="#exportToPDF" text="Exportar huellas"/>
     </HBox>
 </VBox>

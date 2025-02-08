@@ -65,7 +65,7 @@ public class SignInController extends Controller implements Initializable {
     }
 
     private boolean areFieldsValid() {
-        return name.getText().trim().isEmpty() || email.getText().trim().isEmpty() || password.getText().trim().isEmpty();
+        return !name.getText().trim().isEmpty() || !email.getText().trim().isEmpty() || !password.getText().trim().isEmpty();
     }
 
     private boolean isValidEmail(String email) {

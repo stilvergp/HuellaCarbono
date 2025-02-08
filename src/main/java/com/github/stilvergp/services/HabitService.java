@@ -23,7 +23,6 @@ public class HabitService {
             id.setUserId(userId);
             id.setActivityId(activityId);
             habit = habitDAO.findById(id);
-            habitDAO.close();
         }
         return habit;
     }
@@ -54,7 +53,6 @@ public class HabitService {
             if (isInDatabase != null) {
                 habitDAO.delete(footprint);
             }
-            habitDAO.close();
         }
     }
 

@@ -53,15 +53,15 @@ public class AddFootprint extends Controller implements Initializable {
     }
 
     private void reloadActivitiesFromDatabase() {
+        this.activityChoice.getItems().clear();
         List<Activity> activities = new ActivityService().getActivities();
         ObservableList<Activity> activitiesList = FXCollections.observableArrayList(activities);
-        this.activityChoice.getItems().clear();
         this.activityChoice.setItems(activitiesList);
     }
 
     private void updateUnitText(Activity activity) {
         if (activity != null) {
-            unitChoice.setText(activity.getCategory().getUnit());
+            unitChoice.setText(new ActivityService().getUnit(activity));
         }
     }
 

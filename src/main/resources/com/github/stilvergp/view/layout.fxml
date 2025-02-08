@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.layout.BorderPane?>
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="400.0" prefWidth="600.0" stylesheets="@css/layout.css" xmlns="http://javafx.com/javafx/"
+            prefHeight="400.0" prefWidth="750.0" stylesheets="@css/layout.css" xmlns="http://javafx.com/javafx/"
             xmlns:fx="http://javafx.com/fxml/" fx:controller="com.github.stilvergp.controller.AppController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <Menu id="cuenta" fx:id="account" mnemonicParsing="false" text="Cuenta" visible="false">
                 <MenuItem mnemonicParsing="false" onAction="#logOff" text="Cerrar sesión"/>
+                <MenuItem mnemonicParsing="false" onAction="#openUpdateUser" text="Actualizar cuenta"/>
+                <MenuItem mnemonicParsing="false" onAction="#deleteUser" text="Eliminar cuenta"/>
             </Menu>
         </MenuBar>
     </top>

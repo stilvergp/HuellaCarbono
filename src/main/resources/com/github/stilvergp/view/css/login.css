@@ -1,66 +1,37 @@
-.root {
-    -fx-background-color: #f1f1f1;
-}
-
-.vbox {
-    -fx-alignment: center;
+VBox {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(189, 195, 199, 0.8), 10, 0.3, 0, 4);
     -fx-padding: 20px;
 }
 
-.image-view {
-    -fx-background-radius: 50%;
-}
-
-.label {
-    -fx-text-fill: #333;
-}
-
-.label > .text {
-    -fx-font-size: 16px;
+Label {
+    -fx-font-size: 18px;
     -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
 }
 
-.label#loginTitle {
-    -fx-font-weight: bold;
-    -fx-text-fill: #28a745;
-    -fx-padding: 10px;
-}
-
-.label#loginTitle > .text {
-    -fx-font-size: 26px;
-}
-
-.text-field, .password-field {
-    -fx-border-color: #28a745;
-    -fx-background-color: #ffffff;
+TextField, PasswordField {
+    -fx-background-color: #ecf0f1;
     -fx-border-radius: 5px;
+    -fx-border-color: #bdc3c7;
+    -fx-border-width: 1;
     -fx-padding: 8px;
     -fx-font-size: 14px;
+    -fx-prompt-text-fill: #7f8c8d;
 }
 
-.text-field:focused, .password-field:focused {
-    -fx-border-color: #218838;
-}
-
-.button {
-    -fx-background-color: #28a745;
+Button {
+    -fx-background-color: #3498db;
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-padding: 10px 20px;
     -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
     -fx-cursor: hand;
-    -fx-font-weight: bold;
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(41, 128, 185, 0.7), 5, 0.3, 0, 3);
 }
 
-.button:hover {
-    -fx-background-color: #218838;
-}
-
-.button:pressed {
-    -fx-background-color: #1e7e34;
-}
-
-.vbox {
-    -fx-spacing: 20px;
+Button:hover {
+    -fx-background-color: #2980b9;
 }

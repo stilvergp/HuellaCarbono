@@ -20,7 +20,6 @@ public class FootprintService {
         if (id > 0) {
             FootprintDAO footprintDAO = new FootprintDAO();
             footprint = footprintDAO.findById(id);
-            footprintDAO.close();
         }
         return footprint;
     }
@@ -51,7 +50,6 @@ public class FootprintService {
             if (isInDatabase != null) {
                 footprintDAO.delete(footprint);
             }
-            footprintDAO.close();
         }
     }
 }

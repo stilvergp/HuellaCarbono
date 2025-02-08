@@ -3,7 +3,10 @@ package com.github.stilvergp.controller;
 import com.github.stilvergp.App;
 import com.github.stilvergp.UserSession;
 import com.github.stilvergp.model.entities.Habit;
+import com.github.stilvergp.model.entities.Recommendation;
+import com.github.stilvergp.services.ActivityService;
 import com.github.stilvergp.services.HabitService;
+import com.github.stilvergp.services.RecommendationService;
 import com.github.stilvergp.utils.Alerts;
 import com.github.stilvergp.utils.PDFExporter;
 import com.github.stilvergp.view.Scenes;
@@ -27,6 +30,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -65,12 +69,14 @@ public class HabitListController extends Controller implements Initializable {
         List<Habit> habits = new HabitService().findByUser(UserSession.getInstance().getLoggedInUser());
         this.habits = FXCollections.observableArrayList(habits);
         tableView.setItems(this.habits);
+        habits.stream()
+                .max(Comparator.comparingInt(Habit::getFrequency)).ifPresent(this::updateRecommendationText);
     }
 
     private void searchHabits(String filter) {
         ObservableList<Habit> filteredHabits = FXCollections.observableArrayList(
                 this.habits.stream()
-                        .filter(habit -> habit.getActivity().getName().toLowerCase().contains(filter.toLowerCase()))
+                        .filter(habit -> new ActivityService().getActivityByHabit(habit).getName().toLowerCase().contains(filter.toLowerCase()))
                         .toList()
         );
         tableView.setItems(filteredHabits);
@@ -86,14 +92,18 @@ public class HabitListController extends Controller implements Initializable {
         reloadHabitsFromDatabase();
     }
 
+    public void backToMain() throws IOException {
+        App.currentController.changeScene(Scenes.MAIN, null);
+    }
+
     @Override
     public void onClose(Object input) {
 
     }
 
     private void updateRecommendationText(Habit habit) {
-        int randomIndex = new Random().nextInt(habit.getActivity().getCategory().getRecommendations().size());
-        String randomRecommendationText = habit.getActivity().getCategory().getRecommendations().get(randomIndex).getDescription();
+        List<Recommendation> recommendations = new RecommendationService().getRecommendationsByHabit(habit);
+        String randomRecommendationText = recommendations.get(new Random().nextInt(recommendations.size())).getDescription();
         recommendationText.setText(randomRecommendationText);
     }
 
@@ -113,7 +123,7 @@ public class HabitListController extends Controller implements Initializable {
 
     public void exportToPDF(Event event) {
         Window window = ((Node) (event.getSource())).getScene().getWindow();
-        List<Habit> userHabits = UserSession.getInstance().getLoggedInUser().getHabits();
+        List<Habit> userHabits = new HabitService().findByUser(UserSession.getInstance().getLoggedInUser());
         if (!userHabits.isEmpty()) {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Exportar a PDF.");
@@ -121,9 +131,7 @@ public class HabitListController extends Controller implements Initializable {
             fileChooser.setInitialFileName("habitos.pdf");
             File file = fileChooser.showSaveDialog(window);
             if (file != null) {
-                PDFExporter.exportHabitsToPDF(file,userHabits);
-            } else {
-                Alerts.showErrorAlert("Error al exportar habitos", "Ruta inválida");
+                PDFExporter.exportHabitsToPDF(file, userHabits);
             }
         } else {
             Alerts.showErrorAlert("Error al exportar habitos", "No hay habitos registrados");
@@ -132,14 +140,43 @@ public class HabitListController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        tableView.setEditable(true);
         tableView.getSelectionModel().selectedItemProperty().addListener((_, _, newValue) -> {
             if (newValue != null) {
                 updateRecommendationText(newValue);
             }
         });
-        activityColumn.setCellValueFactory(habit -> new SimpleStringProperty(habit.getValue().getActivity().getName()));
+        activityColumn.setCellValueFactory(habit -> new SimpleStringProperty(new ActivityService().getActivityByHabit(habit.getValue()).getName()));
         frequencyColumn.setCellValueFactory(habit -> new SimpleIntegerProperty(habit.getValue().getFrequency()).asObject());
+        frequencyColumn.setOnEditCommit(event -> {
+            if (event.getNewValue().equals(event.getOldValue())) return;
+            if (event.getNewValue() < 100 && event.getNewValue() > 0) {
+                Habit habit = event.getRowValue();
+                habit.setFrequency(event.getNewValue());
+                HabitService habitService = new HabitService();
+                habitService.update(habit);
+                reloadHabitsFromDatabase();
+            } else {
+                Alerts.showErrorAlert("Error al actualizar el habito", "La frecuencia introducida no puede ser mayor que 100 ni menor de 1");
+            }
+
+        });
         typeColumn.setCellValueFactory(habit -> new SimpleStringProperty(habit.getValue().getType()));
+        typeColumn.setOnEditCommit(event -> {
+            if (event.getNewValue().trim().equals(event.getOldValue().trim())) return;
+            if (event.getNewValue().trim().isEmpty()) return;
+            if (event.getNewValue().matches("diario") || event.getNewValue().matches("semanal") ||
+                    event.getNewValue().matches("mensual") || event.getNewValue().matches("anual")) {
+                Habit habit = event.getRowValue();
+                habit.setType(event.getNewValue());
+                HabitService habitService = new HabitService();
+                habitService.update(habit);
+                reloadHabitsFromDatabase();
+            } else {
+                Alerts.showErrorAlert("Error al actualizar el habito", "El intervalo es invalido, " +
+                        "por favor introduce un valor correcto (diario, semanal, mensual, anual)");
+            }
+        });
         lastDateColumn.setCellValueFactory(new PropertyValueFactory<>("lastDate"));
         lastDateColumn.setCellFactory(_ -> new TableCell<>() {
             private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -161,4 +198,6 @@ public class HabitListController extends Controller implements Initializable {
             }
         });
     }
+
+
 }

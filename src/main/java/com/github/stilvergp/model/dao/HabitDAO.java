@@ -16,7 +16,15 @@ public class HabitDAO {
         session = Connection.getInstance().getSession();
     }
 
+    private Session getSession() {
+        if (session == null || !session.isOpen()) {
+            session = Connection.getInstance().getSession();
+        }
+        return session;
+    }
+
     public void save(Habit habit) {
+        Session session = getSession();
         try {
             session.beginTransaction();
             session.persist(habit);
@@ -24,20 +32,27 @@ public class HabitDAO {
         } catch (Exception e) {
             e.printStackTrace();
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
     }
 
     public Habit findById(HabitId id) {
-        return session.get(Habit.class, id);
+        try (Session session = getSession()) {
+            return session.get(Habit.class, id);
+        }
     }
 
     public List<Habit> findByUser(User user) {
-        Query<Habit> query = session.createQuery("FROM Habit WHERE user = :user", Habit.class)
-                .setParameter("user", user);
-        return query.list();
+        try (Session session = getSession()) {
+            Query<Habit> query = session.createQuery("FROM Habit WHERE user = :user", Habit.class)
+                    .setParameter("user", user);
+            return query.list();
+        }
     }
 
     public void update(Habit habit) {
+        Session session = getSession();
         try {
             session.beginTransaction();
             session.merge(habit);
@@ -45,10 +60,13 @@ public class HabitDAO {
         } catch (Exception e) {
             e.printStackTrace();
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
     }
 
     public void delete(Habit habit) {
+        Session session = getSession();
         try {
             session.beginTransaction();
             session.remove(habit);
@@ -56,10 +74,8 @@ public class HabitDAO {
         } catch (Exception e) {
             e.printStackTrace();
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
-    }
-
-    public void close() {
-        session.close();
     }
 }

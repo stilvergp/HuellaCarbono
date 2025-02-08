@@ -1,0 +1,41 @@
+BorderPane {
+    -fx-background-color: #ffffff;
+}
+
+MenuBar {
+    -fx-background-color: #2980b9;
+    -fx-padding: 8px;
+    -fx-border-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(41, 128, 185, 0.6), 8, 0.3, 0, 4);
+    -fx-font-size: 14px;
+}
+
+Menu {
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+}
+
+Menu:hover {
+    -fx-background-color: #1f6690;
+    -fx-border-radius: 5px;
+}
+
+MenuItem {
+    -fx-font-size: 14px;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 5px 10px;
+}
+
+MenuItem:hover {
+    -fx-background-color: #ecf0f1;
+    -fx-text-fill: #2980b9;
+}
+
+.menu .label {
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.menu:armed {
+    -fx-background-color: #1f6690;
+}

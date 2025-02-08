@@ -7,7 +7,9 @@ public enum Scenes {
     SIGNIN("view/signIn.fxml"),
     ADDFOOTPRINT("view/addFootprint.fxml"),
     ADDHABIT("view/addHabit.fxml"),
-    HABITLIST("view/HabitList.fxml");
+    HABITLIST("view/HabitList.fxml"),
+    COMPAREFOOTPRINTS("view/compareFootprints.fxml"),
+    UPDATEUSER("view/updateUser.fxml"),;
 
     private final String url;
 

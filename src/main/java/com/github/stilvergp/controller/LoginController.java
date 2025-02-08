@@ -5,6 +5,7 @@ import com.github.stilvergp.UserSession;
 import com.github.stilvergp.model.entities.User;
 import com.github.stilvergp.services.UserService;
 import com.github.stilvergp.utils.Alerts;
+import com.github.stilvergp.utils.Security;
 import com.github.stilvergp.view.Scenes;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,7 +33,7 @@ public class LoginController extends Controller implements Initializable {
             return;
         }
         User user = new UserService().getUserByName(name.getText());
-        if (user != null && user.isMyPassword(password.getText())) {
+        if (user != null && user.isMyPassword(Security.hashPassword(password.getText()))) {
             login(user);
             App.currentController.changeScene(Scenes.MAIN, null);
         } else {

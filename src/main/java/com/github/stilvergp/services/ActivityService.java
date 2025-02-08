@@ -2,9 +2,10 @@ package com.github.stilvergp.services;
 
 import com.github.stilvergp.model.dao.ActivityDAO;
 import com.github.stilvergp.model.entities.Activity;
+import com.github.stilvergp.model.entities.Footprint;
+import com.github.stilvergp.model.entities.Habit;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityService {
@@ -30,5 +31,23 @@ public class ActivityService {
             unit = activityDAO.getUnitFromActivity(activity);
         }
         return unit;
+    }
+
+    public Activity getActivityByHabit(Habit habit) {
+        Activity activity = null;
+        if (habit != null) {
+            ActivityDAO activityDAO = new ActivityDAO();
+            activity = activityDAO.getByHabit(habit);
+        }
+        return activity;
+    }
+
+    public Activity getActivityByFootprint(Footprint footprint) {
+        Activity activity = null;
+        if (footprint != null) {
+            ActivityDAO activityDAO = new ActivityDAO();
+            activity = activityDAO.getByFootprint(footprint);
+        }
+        return activity;
     }
 }

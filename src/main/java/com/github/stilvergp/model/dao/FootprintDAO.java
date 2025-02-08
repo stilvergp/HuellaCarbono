@@ -15,7 +15,15 @@ public class FootprintDAO {
         session = Connection.getInstance().getSession();
     }
 
+    private Session getSession() {
+        if (session == null || !session.isOpen()) {
+            session = Connection.getInstance().getSession();
+        }
+        return session;
+    }
+
     public void save(Footprint footprint) {
+        Session session = getSession();
         try {
             session.beginTransaction();
             session.persist(footprint);
@@ -23,20 +31,27 @@ public class FootprintDAO {
         } catch (Exception e) {
             e.printStackTrace();
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
     }
 
     public Footprint findById(int id) {
-        return session.get(Footprint.class, id);
+        try (Session session = getSession()) {
+            return session.get(Footprint.class, id);
+        }
     }
 
     public List<Footprint> findByUser(User user) {
-        Query<Footprint> query = session.createQuery("from Footprint where user = :user", Footprint.class)
-                .setParameter("user", user);
-        return query.list();
+        try (Session session = getSession()) {
+            Query<Footprint> query = session.createQuery("from Footprint where user = :user", Footprint.class)
+                    .setParameter("user", user);
+            return query.list();
+        }
     }
 
     public void update(Footprint footprint) {
+        Session session = getSession();
         try {
             session.beginTransaction();
             session.merge(footprint);
@@ -44,10 +59,13 @@ public class FootprintDAO {
         } catch (Exception e) {
             e.printStackTrace();
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
     }
 
     public void delete(Footprint footprint) {
+        Session session = getSession();
         try {
             session.beginTransaction();
             session.remove(footprint);
@@ -55,10 +73,8 @@ public class FootprintDAO {
         } catch (Exception e) {
             e.printStackTrace();
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
-    }
-
-    public void close() {
-        session.close();
     }
 }

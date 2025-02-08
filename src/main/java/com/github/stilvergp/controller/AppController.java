@@ -2,6 +2,9 @@ package com.github.stilvergp.controller;
 
 import com.github.stilvergp.App;
 import com.github.stilvergp.UserSession;
+import com.github.stilvergp.model.entities.User;
+import com.github.stilvergp.services.UserService;
+import com.github.stilvergp.utils.Alerts;
 import com.github.stilvergp.view.Scenes;
 import com.github.stilvergp.view.View;
 import javafx.fxml.FXML;
@@ -9,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Menu;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -77,5 +81,31 @@ public class AppController extends Controller implements Initializable {
     public void logOff() throws IOException {
         UserSession.getInstance().logout();
         changeScene(Scenes.LOGIN, null);
+    }
+
+    public void openUpdateUser() throws IOException {
+        App.currentController.openModal(Scenes.UPDATEUSER, "Actualizando usuario...", this, null);
+    }
+
+    public void updateUser(User user) {
+        UserService userService = new UserService();
+        userService.update(user);
+    }
+
+    public void deleteUser() {
+        Alerts.showConfirmationAlert("Eliminación de cuenta", "Esta a punto de de eliminar su cuenta, " +
+                "todos sus datos serán borrados, ¿esta totalmente seguro?").showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                User loggedInUser = UserSession.getInstance().getLoggedInUser();
+                UserSession.getInstance().logout();
+                UserService userService = new UserService();
+                userService.delete(loggedInUser);
+                try {
+                    App.currentController.changeScene(Scenes.LOGIN, null);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 }

@@ -2,6 +2,7 @@ package com.github.stilvergp.controller;
 
 import com.github.stilvergp.App;
 import com.github.stilvergp.UserSession;
+import com.github.stilvergp.model.entities.Activity;
 import com.github.stilvergp.model.entities.Footprint;
 import com.github.stilvergp.services.ActivityService;
 import com.github.stilvergp.services.FootprintService;
@@ -26,6 +27,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -54,6 +56,12 @@ public class MainController extends Controller implements Initializable {
     @FXML
     private TextField searchBox;
 
+    @FXML
+    private DatePicker startDateInterval;
+
+    @FXML
+    private DatePicker endDateInterval;
+
     private ObservableList<Footprint> footprints;
 
     @Override
@@ -71,10 +79,35 @@ public class MainController extends Controller implements Initializable {
     private void searchFootprints(String filter) {
         ObservableList<Footprint> filteredFootprints = FXCollections.observableArrayList(
                 footprints.stream()
-                        .filter(footprint -> footprint.getActivity().getName().toLowerCase().contains(filter.toLowerCase()))
+                        .filter(footprint -> new ActivityService().getActivityByFootprint(footprint).getName().toLowerCase().contains(filter.toLowerCase()))
                         .toList()
         );
         tableView.setItems(filteredFootprints);
+    }
+
+    private void filterByDate() {
+        LocalDate startDate = startDateInterval.getValue();
+        LocalDate endDate = endDateInterval.getValue();
+        if (startDate != null && endDate != null && startDate.isBefore(endDate)) {
+            ObservableList<Footprint> filteredFootprints = FXCollections.observableArrayList(
+                    footprints.stream()
+                            .filter(footprint -> {
+                                Instant footprintDate = footprint.getDate();
+                                LocalDateTime footprintDateTime = footprintDate.atZone(ZoneId.systemDefault()).toLocalDateTime();
+                                LocalDate footprintLocalDate = footprintDateTime.toLocalDate();
+                                return !footprintLocalDate.isBefore(startDate) && !footprintLocalDate.isAfter(endDate);
+                            })
+                            .toList()
+            );
+            tableView.setItems(filteredFootprints);
+        }
+    }
+
+    public void removeFilter() {
+        searchBox.setText("");
+        startDateInterval.setValue(null);
+        endDateInterval.setValue(null);
+        reloadFootprintsFromDatabase();
     }
 
     public void addFootprint() throws IOException {
@@ -83,6 +116,10 @@ public class MainController extends Controller implements Initializable {
 
     public void myHabits() throws IOException {
         App.currentController.changeScene(Scenes.HABITLIST, null);
+    }
+
+    public void compareFootprints() throws IOException {
+        App.currentController.openModal(Scenes.COMPAREFOOTPRINTS,"Impacto ambiental",this, null);
     }
 
     public void saveFootprint(Footprint footprint) {
@@ -112,7 +149,7 @@ public class MainController extends Controller implements Initializable {
 
     public void exportToPDF(Event event) {
         Window window = ((Node) (event.getSource())).getScene().getWindow();
-        List<Footprint> userFootprints = UserSession.getInstance().getLoggedInUser().getFootprints();
+        List<Footprint> userFootprints = new FootprintService().findByUser(UserSession.getInstance().getLoggedInUser());
         if (!userFootprints.isEmpty()) {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Exportar a PDF.");
@@ -120,7 +157,7 @@ public class MainController extends Controller implements Initializable {
             fileChooser.setInitialFileName("huellas.pdf");
             File file = fileChooser.showSaveDialog(window);
             if (file != null) {
-                PDFExporter.exportFootprintsToPDF(file,userFootprints);
+                PDFExporter.exportFootprintsToPDF(file, userFootprints);
             } else {
                 Alerts.showErrorAlert("Error al exportar huellas", "Ruta inválida");
             }
@@ -133,7 +170,7 @@ public class MainController extends Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tableView.setEditable(true);
         valueColumn.setEditable(true);
-        activityColumn.setCellValueFactory(footprint -> new SimpleStringProperty(footprint.getValue().getActivity().getName()));
+        activityColumn.setCellValueFactory(footprint -> new SimpleStringProperty(new ActivityService().getActivityByFootprint(footprint.getValue()).getName()));
         valueColumn.setCellValueFactory(footprint -> new SimpleDoubleProperty(footprint.getValue().getValue().doubleValue()).asObject());
         valueColumn.setOnEditCommit(event -> {
             if (event.getNewValue().equals(event.getOldValue())) return;
@@ -168,14 +205,15 @@ public class MainController extends Controller implements Initializable {
                 searchFootprints(newValue);
             }
         });
+        startDateInterval.valueProperty().addListener((_, _, _) -> filterByDate());
+        endDateInterval.valueProperty().addListener((_, _, _) -> filterByDate());
         footprintImpactColumn.setCellValueFactory(footprint -> new SimpleStringProperty(calculateFootprintImpact(footprint.getValue())));
     }
 
     private String calculateFootprintImpact(Footprint footprint) {
-        BigDecimal emissionFactor = new ActivityService().getEmissionFactor(footprint.getActivity());
+        Activity activity = new ActivityService().getActivityByFootprint(footprint);
+        BigDecimal emissionFactor = new ActivityService().getEmissionFactor(activity);
         Double impact = footprint.getValue().doubleValue() * emissionFactor.doubleValue();
         return String.format("%.2f", impact) + " Kg CO²";
     }
-
-
 }

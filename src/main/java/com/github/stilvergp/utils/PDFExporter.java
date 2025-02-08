@@ -2,6 +2,9 @@ package com.github.stilvergp.utils;
 
 import com.github.stilvergp.model.entities.Footprint;
 import com.github.stilvergp.model.entities.Habit;
+import com.github.stilvergp.model.entities.Recommendation;
+import com.github.stilvergp.services.ActivityService;
+import com.github.stilvergp.services.RecommendationService;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -30,14 +33,15 @@ public class PDFExporter {
             table.addHeaderCell("Recomendación");
 
             for (Footprint footprint : footprints) {
-                table.addCell(footprint.getActivity().getName());
+                table.addCell(new ActivityService().getActivityByFootprint(footprint).getName());
                 table.addCell(String.valueOf(footprint.getValue()));
                 table.addCell(footprint.getUnit());
                 LocalDateTime dateTime = footprint.getDate().atZone(ZoneId.systemDefault()).toLocalDateTime();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
                 table.addCell(dateTime.format(formatter));
-                int randomIndex = new Random().nextInt(footprint.getActivity().getCategory().getRecommendations().size());
-                table.addCell(footprint.getActivity().getCategory().getRecommendations().get(randomIndex).getDescription());
+                List<Recommendation> recommendations = new RecommendationService().getRecommendationsByFootprint(footprint);
+                String randomRecommendationText = recommendations.get(new Random().nextInt(recommendations.size())).getDescription();
+                table.addCell(randomRecommendationText);
             }
             document.add(table);
             document.close();
@@ -60,14 +64,15 @@ public class PDFExporter {
             table.addHeaderCell("Recomendación");
 
             for (Habit habit : habits) {
-                table.addCell(habit.getActivity().getName());
+                table.addCell(new ActivityService().getActivityByHabit(habit).getName());
                 table.addCell(String.valueOf(habit.getFrequency()));
                 table.addCell(habit.getType());
                 LocalDateTime dateTime = habit.getLastDate().atZone(ZoneId.systemDefault()).toLocalDateTime();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
                 table.addCell(dateTime.format(formatter));
-                int randomIndex = new Random().nextInt(habit.getActivity().getCategory().getRecommendations().size());
-                table.addCell(habit.getActivity().getCategory().getRecommendations().get(randomIndex).getDescription());
+                List<Recommendation> recommendations = new RecommendationService().getRecommendationsByHabit(habit);
+                String randomRecommendationText = recommendations.get(new Random().nextInt(recommendations.size())).getDescription();
+                table.addCell(randomRecommendationText);
             }
             document.add(table);
             document.close();
