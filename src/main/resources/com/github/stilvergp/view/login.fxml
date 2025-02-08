@@ -16,12 +16,12 @@
         <VBox.margin>
             <Insets bottom="10.0"/>
         </VBox.margin>
-        <Label prefHeight="34.0" prefWidth="102.0" text="Name:">
+        <Label prefHeight="34.0" prefWidth="102.0" text="Nombre:">
             <font>
                 <Font size="16.0"/>
             </font>
         </Label>
-        <TextField fx:id="name" prefHeight="25.0" prefWidth="213.0" promptText="Name"/>
+        <TextField fx:id="name" prefHeight="25.0" prefWidth="213.0" promptText="Nombre"/>
     </HBox>
     <HBox alignment="CENTER" prefHeight="16.0" prefWidth="471.0">
         <VBox.margin>

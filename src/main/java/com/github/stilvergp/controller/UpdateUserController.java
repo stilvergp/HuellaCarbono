@@ -1,6 +1,6 @@
 package com.github.stilvergp.controller;
 
-import com.github.stilvergp.UserSession;
+import com.github.stilvergp.model.UserSession;
 import com.github.stilvergp.model.entities.User;
 import javafx.event.Event;
 import javafx.fxml.FXML;

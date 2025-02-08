@@ -12,7 +12,6 @@ MenuBar {
 
 Menu {
     -fx-font-size: 14px;
-    -fx-text-fill: white;
 }
 
 Menu:hover {
@@ -33,7 +32,6 @@ MenuItem:hover {
 
 .menu .label {
     -fx-font-weight: bold;
-    -fx-text-fill: white;
 }
 
 .menu:armed {

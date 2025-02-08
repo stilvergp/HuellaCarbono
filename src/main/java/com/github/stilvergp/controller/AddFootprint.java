@@ -1,6 +1,6 @@
 package com.github.stilvergp.controller;
 
-import com.github.stilvergp.UserSession;
+import com.github.stilvergp.model.UserSession;
 import com.github.stilvergp.model.entities.Activity;
 import com.github.stilvergp.model.entities.Footprint;
 import com.github.stilvergp.services.ActivityService;
@@ -16,7 +16,9 @@ import javafx.util.StringConverter;
 
 import java.math.BigDecimal;
 import java.net.URL;
-import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
@@ -72,7 +74,8 @@ public class AddFootprint extends Controller implements Initializable {
             footprint.setUser(UserSession.getInstance().getLoggedInUser());
             footprint.setValue(BigDecimal.valueOf(Double.parseDouble(valueLine.getText())));
             footprint.setUnit(unitChoice.getText());
-            footprint.setDate(Instant.now());
+            LocalDateTime dateTime = LocalDateTime.of(datePicker.getValue(), LocalTime.of(hourSpinner.getValue(), minuteSpinner.getValue()));
+            footprint.setDate(dateTime.atZone(ZoneId.systemDefault()).toInstant());
             saveAndCloseWindow(footprint, event);
         } else {
             Alerts.showErrorAlert("Error al registrar la huella", "Debe rellenar todos los campos");
@@ -93,7 +96,7 @@ public class AddFootprint extends Controller implements Initializable {
         if (activity != null) {
             BigDecimal emissionFactor = new ActivityService().getEmissionFactor(activity);
             Double impact = Double.parseDouble(valueLine.getText()) * emissionFactor.doubleValue();
-            footprintImpact.setText(String.format("%.2f", impact));
+            footprintImpact.setText(String.format("%.2f", impact) + " Kg CO²");
         }
     }
 

@@ -1,7 +1,7 @@
 package com.github.stilvergp.controller;
 
 import com.github.stilvergp.App;
-import com.github.stilvergp.UserSession;
+import com.github.stilvergp.model.UserSession;
 import com.github.stilvergp.model.entities.Habit;
 import com.github.stilvergp.model.entities.Recommendation;
 import com.github.stilvergp.services.ActivityService;

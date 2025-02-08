@@ -1,4 +1,4 @@
-package com.github.stilvergp;
+package com.github.stilvergp.model;
 
 import com.github.stilvergp.model.entities.User;
 

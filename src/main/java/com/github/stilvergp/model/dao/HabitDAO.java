@@ -27,7 +27,7 @@ public class HabitDAO {
         Session session = getSession();
         try {
             session.beginTransaction();
-            session.persist(habit);
+            session.merge(habit);
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
